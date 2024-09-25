@@ -1,0 +1,54 @@
+name: NPM Build + Patch Auto Versioning + Docker Hub Build and Push
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      docker-hub-image-name:
+        required: true
+        type: string
+      docker-hub-username:
+        required: true
+        type: string
+
+jobs:
+  checkout-npm-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Increment Version
+        id: versioning
+        run: |
+          if [ ! -f VERSION ]; then
+            echo "0.1.0" > VERSION
+          fi
+
+          current_version=$(cat VERSION)
+          IFS='.' read -r major minor patch <<< "$current_version"
+          new_patch=$((patch + 1))
+          new_version="$major.$minor.$new_patch"
+          echo $new_version > VERSION
+          echo "::set-output name=version::$new_version"
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ github.sha }}
+            ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:latest
+            ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ steps.versioning.outputs.version }}
