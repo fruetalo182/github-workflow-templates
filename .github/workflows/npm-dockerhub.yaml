@@ -32,20 +32,6 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
 
-      - name: Increment Version
-        id: versioning
-        run: |
-          if [ ! -f VERSION ]; then
-            echo "0.1.0" > VERSION
-          fi
-
-          current_version=$(cat VERSION)
-          IFS='.' read -r major minor patch <<< "$current_version"
-          new_patch=$((patch + 1))
-          new_version="$major.$minor.$new_patch"
-          echo $new_version > VERSION
-          echo "::set-output name=version::$new_version"
-
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
@@ -54,5 +40,4 @@ jobs:
           tags: |
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ github.sha }}
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:latest
-            ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ steps.versioning.outputs.version }}
           build-args: ${{ inputs.docker-build-args }}
