@@ -1,4 +1,4 @@
-name: NPM dependencies + Patch Auto Versioning + Docker Hub Build and Push
+name: NPM dependencies + Docker Hub Build and Push with optional args
 
 on:
   workflow_call:
