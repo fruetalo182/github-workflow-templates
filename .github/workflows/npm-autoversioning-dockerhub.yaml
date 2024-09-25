@@ -12,6 +12,9 @@ on:
       docker-hub-username:
         required: true
         type: string
+      docker-build-args:
+        required: false
+        type: string
 
 jobs:
   checkout-npm-docker:
@@ -52,3 +55,4 @@ jobs:
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ github.sha }}
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:latest
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ steps.versioning.outputs.version }}
+          build-args: ${{ inputs.build-args }}
