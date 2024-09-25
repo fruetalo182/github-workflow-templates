@@ -15,6 +15,10 @@ on:
       docker-build-args:
         required: false
         type: string
+    secrets:
+          GIPHY_API_KEY:
+            required: true
+        
 
 jobs:
   checkout-npm-docker:
@@ -40,4 +44,6 @@ jobs:
           tags: |
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:${{ github.sha }}
             ${{ inputs.docker-hub-username }}/${{ inputs.docker-hub-image-name }}:latest
-          build-args: ${{ inputs.docker-build-args }}
+          build-args: |
+            ${{ inputs.docker-build-args }}
+            GIPHY_API_KEY=${{ secrets.GIPHY_API_KEY }}
