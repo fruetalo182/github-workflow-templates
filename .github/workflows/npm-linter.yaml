@@ -19,14 +19,14 @@ on:
         type: boolean
         required: false
         default: true
-    secrets:
-          GITHUB_TOKEN:
-            required: false
 
 jobs:
   build:
     name: Lint Code Base
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
 
     steps:
       - name: Checkout Code
@@ -37,7 +37,7 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           VALIDATE_JAVASCRIPT_ES: ${{ inputs.VALIDATE_JAVASCRIPT_ES }}
