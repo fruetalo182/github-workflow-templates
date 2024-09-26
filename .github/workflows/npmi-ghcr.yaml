@@ -1,4 +1,4 @@
-name: NPM install dependencies + Docker Hub Build and Push
+name: NPM install dependencies + GHCR Build and Push
 
 on:
   workflow_call:
@@ -6,18 +6,18 @@ on:
       node-version:
         required: true
         type: string
-      docker-hub-image-name:
+      ghcr-image-name:
         required: true
         type: string
-      docker-hub-owner:
+      ghcr-owner:
         required: true
         type: string
     secrets:
-      DOCKERHUB_TOKEN:
+      GITHUB_TOKEN:
         required: true
 
 jobs:
-  checkout-npm-docker:
+  checkout-npm-ghcr:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,11 +32,12 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
 
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          username: ${{ inputs.docker-hub-owner }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ inputs.ghcr-owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
@@ -44,5 +45,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ inputs.docker-hub-owner }}/${{ inputs.docker-hub-image-name }}:${{ github.sha }}
-            ${{ inputs.docker-hub-owner }}/${{ inputs.docker-hub-image-name }}:latest
+            ghcr.io/${{ inputs.ghcr-owner }}/${{ inputs.ghcr-image-name }}:${{ github.sha }}
+            ghcr.io/${{ inputs.ghcr-owner }}/${{ inputs.ghcr-image-name }}:latest
