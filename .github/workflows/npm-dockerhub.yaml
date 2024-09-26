@@ -12,9 +12,6 @@ on:
       docker-hub-username:
         required: true
         type: string
-      docker-build-args:
-        required: false
-        type: string
     secrets:
       DOCKERHUB_TOKEN:
         required: true
