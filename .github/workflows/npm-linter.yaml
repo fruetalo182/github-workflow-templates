@@ -1,6 +1,24 @@
 name: Lint Code Base
 
-on: [push, pull_request]
+on:
+  workflow_call:
+    inputs:
+      VALIDATE_JAVASCRIPT_ES:
+        type: boolean
+        required: false
+        default: true
+      VALIDATE_TYPESCRIPT_ES:
+        type: boolean
+        required: false
+        default: true
+      VALIDATE_CSS:
+        type: boolean
+        required: false
+        default: true
+      VALIDATE_HTML:
+        type: boolean
+        required: false
+        default: true
 
 jobs:
   build:
@@ -19,7 +37,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_CSS: true
-          VALIDATE_HTML: true
+          VALIDATE_JAVASCRIPT_ES: ${{ inputs.VALIDATE_JAVASCRIPT_ES }}
+          VALIDATE_TYPESCRIPT_ES: ${{ inputs.VALIDATE_TYPESCRIPT_ES }}
+          VALIDATE_CSS: ${{ inputs.VALIDATE_CSS }}
+          VALIDATE_HTML: ${{ inputs.VALIDATE_HTML }}
