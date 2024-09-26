@@ -1,0 +1,20 @@
+name: Super Lint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  super-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Lint code
+        uses: github/super-linter@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          run_linter: "javascript,typescript,css,html"
