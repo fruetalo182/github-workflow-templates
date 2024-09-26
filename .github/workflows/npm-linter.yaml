@@ -36,7 +36,6 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_JAVASCRIPT_ES: ${{ inputs.VALIDATE_JAVASCRIPT_ES }}
           VALIDATE_TYPESCRIPT_ES: ${{ inputs.VALIDATE_TYPESCRIPT_ES }}
           VALIDATE_CSS: ${{ inputs.VALIDATE_CSS }}
