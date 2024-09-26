@@ -19,7 +19,9 @@ on:
         type: boolean
         required: false
         default: true
-
+    secrets:
+      token:
+        required: false
 
 jobs:
   build:
