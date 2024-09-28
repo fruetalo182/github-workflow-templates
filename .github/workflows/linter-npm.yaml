@@ -13,9 +13,9 @@ on:
         default: true
 
 jobs:
-  build:
+  lint-code:
     timeout-minutes: 15
-    name: Lint Code Base
+    name: NPM lint
     runs-on: ubuntu-latest
     permissions:
       contents: read
