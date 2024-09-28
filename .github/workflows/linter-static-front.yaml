@@ -13,9 +13,9 @@ on:
         default: true
 
 jobs:
-  build:
+  linit-code:
     timeout-minutes: 15
-    name: Lint Code Base
+    name: Static front lint
     runs-on: ubuntu-latest
     permissions:
       contents: read
