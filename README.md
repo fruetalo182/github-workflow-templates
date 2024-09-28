@@ -7,7 +7,7 @@
 This repository contains a set of GitHub Actions workflow templates designed to streamline, centralize, and automate various CI pipelines. Below is a brief description of each workflow.
 
 ---
-### Available Workflows
+### Available Workflows templates
 
 #### Lint
 
