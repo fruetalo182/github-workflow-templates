@@ -14,7 +14,8 @@ on:
         type: string
 
 jobs:
-  checkout:
+  install-deps-build-push:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
 
     steps:
