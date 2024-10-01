@@ -27,16 +27,25 @@ This repository contains a set of GitHub Actions workflow templates designed to 
 
 #### Build and Push
 
-- Build & Push for **Docker Hub** (including ```npm install```)
+- Build & Push for **Docker Hub**
   ```
   .github/
   └── workflows/
       └── build-push-docker-hub.yaml
   ```
 
-- Build & Push for **GHCR** (including ```npm install```)
+- Build & Push for **GHCR**
   ```
   .github/
   └── workflows/
       └── build-push-ghcr.yaml
+  ```
+
+#### Versioning
+
+- Increment patch version on push event
+  ```
+  .github/
+  └── workflows/
+      └── version-autoupdate-patch.yaml
   ```
