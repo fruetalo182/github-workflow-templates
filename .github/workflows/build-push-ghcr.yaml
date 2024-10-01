@@ -1,4 +1,4 @@
-name: NPM install dependencies + GHCR Build and Push
+name: GHCR Build and Push
 
 on:
   workflow_call:

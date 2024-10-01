@@ -1,4 +1,4 @@
-name: NPM install dependencies + Docker Hub Build and Push
+name: Docker Hub Build and Push
 
 on:
   workflow_call:
