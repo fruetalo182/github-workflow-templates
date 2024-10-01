@@ -1,4 +1,4 @@
-name: Versioning
+name: Patch Versioning on Push
 
 on:
   workflow_call:
@@ -22,27 +22,27 @@ jobs:
       - name: Get and Increment Version
         id: versioning
         run: |
-            # Si el archivo VERSION no existe, crear uno
+            # If the file VERSION doesnt exists, create it
             if [ ! -f VERSION ]; then
               echo "0.1.0" > VERSION
             fi
 
-            # Leer la versión actual
+            # Read current version
             current_version=$(cat VERSION)
             echo "Current version: $current_version"
 
-            # Separar en partes major, minor, patch
+            # Split major, minor, patch
             IFS='.' read -r major minor patch <<< "$current_version"
             
-            # Incrementar el patch
+            # Increment patch
             new_patch=$((patch + 1))
             new_version="$major.$minor.$new_patch"
             echo "New version: $new_version"
 
-            # Guardar la nueva versión en el archivo VERSION
+            # Save new version on VERSION
             echo $new_version > VERSION
 
-            # Exportar la nueva versión como un output para usar en los siguientes pasos
+            # Export the new version as output to be used in another workflow with docker tag
             echo "version=$new_version" >> $GITHUB_OUTPUT
             
       - name: Commit and push updated version
