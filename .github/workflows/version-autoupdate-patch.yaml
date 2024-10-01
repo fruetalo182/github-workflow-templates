@@ -39,4 +39,4 @@ jobs:
             echo $new_version > VERSION
 
             # Exportar la nueva versión como un output para usar en los siguientes pasos
-            echo "::set-output name=version::$new_version"
+            echo "version=$new_version" >> $GITHUB_OUTPUT
