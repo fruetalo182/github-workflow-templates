@@ -3,9 +3,6 @@ name: NPM install dependencies + GHCR Build and Push
 on:
   workflow_call:
     inputs:
-      node-version:
-        required: true
-        type: string
       ghcr-image-name:
         required: true
         type: string
@@ -14,21 +11,13 @@ on:
         type: string
 
 jobs:
-  install-deps-build-push:
+  build-push-ghcr:
     timeout-minutes: 30
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install NPM dependencies
-        run: npm install
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
