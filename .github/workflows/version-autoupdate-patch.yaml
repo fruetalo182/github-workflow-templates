@@ -44,4 +44,11 @@ jobs:
 
             # Exportar la nueva versión como un output para usar en los siguientes pasos
             echo "version=$new_version" >> $GITHUB_OUTPUT
-
+            
+      - name: Commit and push updated version
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add VERSION
+          git commit -m "Increment version to ${{ steps.versioning.outputs.version }}"
+          git push
