@@ -1,0 +1,31 @@
+# .github/workflows/versioning.yml in the other repo
+name: Versioning
+
+on:
+  workflow_call:
+    outputs:
+      version:
+        description: 'The new version'
+        value: ${{ steps.version.outputs.version }}
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get and Increment Version
+        id: version
+        run: |
+          if [ ! -f VERSION ]; then
+            echo "0.1.0" > VERSION
+          fi
+
+          current_version=$(cat VERSION)
+          IFS='.' read -r major minor patch <<< "$current_version"
+          new_patch=$((patch + 1))
+          new_version="$major.$minor.$new_patch"
+          echo $new_version > VERSION
+          echo "::set-output name=version::$new_version"
