@@ -5,11 +5,13 @@ on:
     outputs:
       version:
         description: 'The new version'
-        value: ${{ jobs.versioning.outputs.version }}
+        value: ${{ jobs.versioning.outputs.new_version }}
 
 jobs:
   versioning:
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.versioning.outputs.version }}
 
     steps:
       - name: Checkout code
@@ -20,7 +22,7 @@ jobs:
         run: |
             # Si el archivo VERSION no existe, crear uno
             if [ ! -f VERSION ]; then
-            echo "0.1.0" > VERSION
+              echo "0.1.0" > VERSION
             fi
 
             # Leer la versión actual
@@ -39,4 +41,4 @@ jobs:
             echo $new_version > VERSION
 
             # Exportar la nueva versión como un output para usar en los siguientes pasos
-            echo "version=$new_version" >> $env:GITHUB_OUTPUT
+            echo "version=$new_version" >> $GITHUB_OUTPUT
