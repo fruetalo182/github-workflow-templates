@@ -9,6 +9,9 @@ on:
       ghcr-owner:
         required: true
         type: string
+      additional-tags:
+        required: false
+        type: string
 
 jobs:
   build-push-ghcr:
@@ -35,3 +38,4 @@ jobs:
           tags: |
             ghcr.io/${{ inputs.ghcr-owner }}/${{ inputs.ghcr-image-name }}:${{ github.sha }}
             ghcr.io/${{ inputs.ghcr-owner }}/${{ inputs.ghcr-image-name }}:latest
+            ${{ inputs.additional-tags }}
