@@ -1,0 +1,42 @@
+name: Super-Linter Go
+
+on:
+  workflow_call:
+    inputs:
+      VALIDATE_GO:
+        type: boolean
+        required: false
+        default: true
+      VALIDATE_GO_MODULES:
+        type: boolean
+        required: false
+        default: true
+      VALIDATE_GO_RELEASER:
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  lint-code:
+    timeout-minutes: 15
+    name: Go lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          VALIDATE_GO: ${{ inputs.VALIDATE_GO }}
+          VALIDATE_GO_MODULES: ${{ inputs.VALIDATE_GO_MODULES }}
+          VALIDATE_GO_RELEASER: ${{ inputs.VALIDATE_GO_RELEASER }}
