@@ -51,4 +51,4 @@ jobs:
           VALIDATE_GO: ${{ inputs.VALIDATE_GO }}
           VALIDATE_GO_MODULES: ${{ inputs.VALIDATE_GO_MODULES }}
           VALIDATE_GO_RELEASER: ${{ inputs.VALIDATE_GO_RELEASER }}
-          GO_MODULE_DOWNLOAD: false
+          GO_MODULE_DOWNLOAD: true
